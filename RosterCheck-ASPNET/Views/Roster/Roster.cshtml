@@ -1,4 +1,5 @@
-﻿@model IEnumerable<RosterCheck_ASPNET.Models.GuildViewModel>
+﻿@using RosterCheck_ASPNET.Models
+@model RosterCheck_ASPNET.Models.GuildModel
 
 @{
     ViewBag.Title = "Roster";
@@ -6,4 +7,57 @@
 
 <h2>Roster</h2>
 
-@ViewData["message"]
+<table>
+
+    @*table column names*@
+    <tr>
+        <td>
+            Name
+        </td>
+        <td>
+            Realm
+        </td>
+        <td>
+            Class
+        </td>
+        <td>
+            Race
+        </td>
+        <td>
+            Spec
+        </td>
+        <td>
+            Role
+        </td>
+        <td>
+            Guild rank
+        </td>
+    </tr>
+
+    @foreach (var member in Model.Members)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => member.Character.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => member.Character.Realm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => member.Character.ClassName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => member.Character.Race)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => member.Character.Spec.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => member.Character.Spec.Role)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => member.Rank)
+            </td>
+        </tr>
+    }
+</table>
