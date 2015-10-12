@@ -33,7 +33,7 @@
         </td>
     </tr>
 
-    @foreach (var member in Model.Members)
+    @foreach (var member in Model.Members.OrderBy(x => x.Rank))
     {
         <tr>
             <td>
@@ -46,7 +46,7 @@
                 @Html.DisplayFor(modelItem => member.Character.ClassName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => member.Character.Race)
+                @Html.DisplayFor(modelItem => member.Character.RaceName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => member.Character.Spec.Name)

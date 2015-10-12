@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Net;
 using Newtonsoft.Json;
 
@@ -10,6 +11,7 @@ namespace RosterCheck_ASPNET.Models
 {
     public class GuildModel
     {
+        // properties
         public long LastModified { get; set; }
         public string Name { get; set; }
         public string Realm { get; set; }
@@ -18,6 +20,10 @@ namespace RosterCheck_ASPNET.Models
         public int AchievementPoints { get; set; }
         public List<Member> Members { get; set; }
 
+        /// <summary>
+        /// Queries the armory for a json string of a guild.
+        /// </summary>
+        /// <returns>Json string.</returns>
         public static string GetGuildJson()
         {
             try
@@ -25,7 +31,8 @@ namespace RosterCheck_ASPNET.Models
                 // Create URL request
                 var request = WebRequest.Create("https://eu.api.battle.net/" +
                                                 "wow/guild/the-maelstrom/" +
-                                                "Project%20flying%20monkey?fields=members&locale=en_GB&apikey=" +
+                                                "Project%20flying%20monkey" +
+                                                "?fields=members&locale=en_GB&apikey=" +
                                                 ConfigurationManager.AppSettings["API_KEY"]);
 
                 // Get the response
@@ -34,22 +41,18 @@ namespace RosterCheck_ASPNET.Models
                 // Get the stream content returned by the server
                 var dataStream = response.GetResponseStream();
 
-                // Open the stream for reading
-                if (dataStream != null)
-                {
-                    var reader = new StreamReader(dataStream);
+                // Open the stream for reading, if there is no data in the stream, return null
+                if (dataStream == null) return "";
+                var reader = new StreamReader(dataStream);
 
-                    // Read the content of the stream
-                    var responseString = reader.ReadToEnd();
+                // Read the content of the stream
+                var responseString = reader.ReadToEnd();
 
-                    // Cleanup
-                    reader.Close();
-                    response.Close();
+                // Cleanup
+                reader.Close();
+                response.Close();
 
-                    return responseString;
-                }
-
-                return "";
+                return responseString;
             }
             catch (Exception)
             {
@@ -58,6 +61,10 @@ namespace RosterCheck_ASPNET.Models
 
         }
 
+        /// <summary>
+        /// Deserializes a guild json string into a guild model.
+        /// </summary>
+        /// <returns>GuildModel object.</returns>
         public static GuildModel GetGuildModel()
         {
             try
@@ -65,12 +72,13 @@ namespace RosterCheck_ASPNET.Models
                 // Deserialize the json guild info stream
                 var deserializedGuild = JsonConvert.DeserializeObject<GuildModel>(GetGuildJson());
 
-                // Assign class names to members from their class id
+                // Assign class and race names to members
                 foreach (var member in deserializedGuild.Members)
                 {
-                    member.Character.ClassName = Enum.GetName(typeof (Character.ClassCode), member.Character.Class);
+                    member.Character.ClassName = member.Character.GetClassName(member.Character.Class);
+                    member.Character.RaceName = member.Character.GetRaceName(member.Character.Race);
                 }
-
+                
                 return deserializedGuild;
             }
             catch (Exception)
@@ -91,29 +99,92 @@ namespace RosterCheck_ASPNET.Models
         {
             [DisplayName("Name")]
             public string Name { get; set; }
-
             public string Realm { get; set; }
             public int Class { get; set; }
             public string ClassName { get; set; }
             public int Race { get; set; }
+            public string RaceName { get; set; }
             public int Gender { get; set; }
             public int Level { get; set; }
             public Spec Spec { get; set; }
             public int LastModified { get; set; }
 
-            public enum ClassCode
+            /// <summary>
+            /// Returns a class name based on the class id.
+            /// </summary>
+            /// <param name="classId">The class id queried from the armory.</param>
+            /// <returns>Class name string.</returns>
+            public string GetClassName(int classId)
             {
-                Warrior = 1,
-                Paladin = 2,
-                Hunter = 3,
-                Rogue = 4,
-                Priest = 5,
-                DeathKnight = 6,
-                Shaman = 7,
-                Mage = 8,
-                Warlock = 9,
-                Monk = 10,
-                Druid = 11
+                switch (classId)
+                {
+                    case 1:
+                        return "Warrior";
+                    case 2:
+                        return "Paladin";
+                    case 3:
+                        return "Hunter";
+                    case 4:
+                        return "Rogue";
+                    case 5:
+                        return "Priest";
+                    case 6:
+                        return "Death Knight";
+                    case 7:
+                        return "Shaman";
+                    case 8:
+                        return "Mage";
+                    case 9:
+                        return "Warlock";
+                    case 10:
+                        return "Monk";
+                    case 11:
+                        return "Druid";
+                    default:
+                        return "unknown class";
+                }
+            }
+
+            /// <summary>
+            /// Returns a race name based on the race id.
+            /// </summary>
+            /// <param name="raceId">Race id queried from the armory.</param>
+            /// <returns>Race name string.</returns>
+            public string GetRaceName(int raceId)
+            {
+                switch (raceId)
+                {
+                    case 1:
+                        return "Human";
+                    case 2:
+                        return "Orc";
+                    case 3:
+                        return "Dwarf";
+                    case 4:
+                        return "Night Elf";
+                    case 5:
+                        return "Undead";
+                    case 6:
+                        return "Tauren";
+                    case 7:
+                        return "Gnome";
+                    case 8:
+                        return "Troll";
+                    case 9:
+                        return "Goblin";
+                    case 10:
+                        return "Blood Elf";
+                    case 11:
+                        return "Draenei";
+                    case 22:
+                        return "Worgen";
+                    case 25:
+                        return "Pandaren";
+                    case 26:
+                        return "Pandaren";
+                    default:
+                        return "unknown race";
+                }
             }
         }
 
