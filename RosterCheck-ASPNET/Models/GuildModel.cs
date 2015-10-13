@@ -75,13 +75,6 @@ namespace RosterCheck_ASPNET.Models
                 // Deserialize the json guild info stream
                 var deserializedGuild = JsonConvert.DeserializeObject<GuildModel>(GetGuildJson());
 
-                // Assign class and race names to members
-                foreach (var member in deserializedGuild.Members)
-                {
-                    member.Character.ClassName = member.Character.GetClassName(member.Character.Class);
-                    member.Character.RaceName = member.Character.GetRaceName(member.Character.Race);
-                }
-
                 return deserializedGuild;
             }
             catch (Exception ex)
