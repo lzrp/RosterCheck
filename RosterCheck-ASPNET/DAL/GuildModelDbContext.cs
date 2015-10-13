@@ -10,5 +10,7 @@ namespace RosterCheck_ASPNET.DAL
     public class GuildModelDbContext : DbContext
     {
         public DbSet<GuildModel> GuildModels { get; set; }
+        public DbSet<GuildModel.Member> Members { get; set; }
+        public DbSet<GuildModel.Character> Characters { get; set; }
     }
 }

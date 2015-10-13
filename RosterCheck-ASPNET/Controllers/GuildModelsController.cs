@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Web.ApplicationServices;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
@@ -14,8 +15,13 @@ namespace RosterCheck_ASPNET.Controllers
         // GET: Roster
         public ActionResult GuildModels()
         {
-            var model = GuildModel.GetGuildModel();
-            return View(model);
+            //if (realmName == null || guildName == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+
+            //var model = GuildModel.GetGuildModel(realmName, guildName);
+            return View();
         }
 
         public ActionResult CachedGuildModels()
@@ -26,10 +32,10 @@ namespace RosterCheck_ASPNET.Controllers
 
         public ActionResult ImportGuild()
         {
-            var importedGuild = GuildModel.GetGuildModel();
+            //var importedGuild = GuildModel.GetGuildModel();
 
-            dbContext.GuildModels.Add(importedGuild);
-            dbContext.SaveChanges();
+            //dbContext.GuildModels.Add(importedGuild);
+            //dbContext.SaveChanges();
 
             return RedirectToAction("CachedGuildModels");
         }

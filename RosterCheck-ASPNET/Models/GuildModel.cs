@@ -27,16 +27,14 @@ namespace RosterCheck_ASPNET.Models
         /// Queries the armory for a json string of a guild.
         /// </summary>
         /// <returns>Json string.</returns>
-        public static string GetGuildJson()
+        public static string GetGuildJson(string realmName, string guildName)
         {
             try
             {
                 // Create URL request
-                var request = WebRequest.Create("https://eu.api.battle.net/" +
-                                                "wow/guild/the-maelstrom/" +
-                                                "Project%20flying%20monkey" +
-                                                "?fields=members&locale=en_GB&apikey=" +
-                                                ConfigurationManager.AppSettings["API_KEY"]);
+                var requestString =
+                    $"https://eu.api.battle.net/wow/guild/{realmName}/{guildName}?fields=members&locale=en_GB&apikey={ConfigurationManager.AppSettings["API_KEY"]}";
+                var request = WebRequest.Create(requestString);
 
                 // Get the response
                 var response = request.GetResponse();
@@ -68,12 +66,12 @@ namespace RosterCheck_ASPNET.Models
         /// Deserializes a guild json string into a guild model.
         /// </summary>
         /// <returns>GuildModel object.</returns>
-        public static GuildModel GetGuildModel()
+        public static GuildModel GetGuildModel(string realmName, string guildName)
         {
             try
             {
                 // Deserialize the json guild info stream
-                var deserializedGuild = JsonConvert.DeserializeObject<GuildModel>(GetGuildJson());
+                var deserializedGuild = JsonConvert.DeserializeObject<GuildModel>(GetGuildJson(realmName, guildName));
 
                 return deserializedGuild;
             }
