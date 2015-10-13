@@ -171,6 +171,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\GuildModelsController.cs" />
+    <Compile Include="DAL\GuildModelDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -238,6 +239,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\GuildModels\GuildModels.cshtml" />
     <Content Include="Views\GuildModels\CachedGuildModels.cshtml" />
+    <Content Include="Views\GuildModels\CachedGuildModelsPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,4 @@
-﻿@model RosterCheck_ASPNET.Models.GuildModel
+﻿@model List<RosterCheck_ASPNET.Models.GuildModel>
 
 @{
     ViewBag.Title = "Roster";
@@ -9,9 +9,6 @@
 <table>
 
     @*table column names*@
-    <tr>
-        <td><input type="button" style="width: 240px" onclick ="location.href='@Url.Action("ImportGuild", "GuildModels")'" value="IMPORT GUILD"></td>
-    </tr>
     <tr>
         <td>
             Name
@@ -36,7 +33,7 @@
         </td>
     </tr>
 
-    @foreach (var member in Model.Members.OrderBy(x => x.Rank))
+    @foreach (var member in Model.First().Members.OrderBy(x => x.Rank))
     {
         <tr>
             <td>

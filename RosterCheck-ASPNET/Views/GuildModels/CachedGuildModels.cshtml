@@ -1,4 +1,4 @@
-﻿@model List<RosterCheck_ASPNET.Models.GuildModel>
+﻿@model RosterCheck_ASPNET.Models.GuildModel
 
 @{
     ViewBag.Title = "Roster";
@@ -33,7 +33,7 @@
         </td>
     </tr>
 
-    @foreach (var member in Model.First().Members.OrderBy(x => x.Rank))
+    @foreach (var member in Model.Members.OrderBy(x => x.Rank))
     {
         <tr>
             <td>

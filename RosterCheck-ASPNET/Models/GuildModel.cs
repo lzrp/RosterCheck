@@ -267,9 +267,6 @@ namespace RosterCheck_ASPNET.Models
             
         }
 
-        public class GuildModelDbContext : DbContext
-        {
-            public DbSet<GuildModel> GuildModels { get; set; }
-        }
+        
     }
 }
