@@ -3,10 +3,10 @@ using RosterCheck_ASPNET.Models;
 
 namespace RosterCheck_ASPNET.Controllers
 {
-    public class RosterController : Controller
+    public class GuildModelsController : Controller
     {
         // GET: Roster
-        public ActionResult Roster()
+        public ActionResult GuildModels()
         {
             ViewBag.message = GuildModel.GetGuildModel();
 
