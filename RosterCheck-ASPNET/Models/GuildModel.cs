@@ -14,6 +14,7 @@ namespace RosterCheck_ASPNET.Models
     public class GuildModel
     {
         // properties
+        public int Id { get; set; }
         public long LastModified { get; set; }
         public string Name { get; set; }
         public string Realm { get; set; }
@@ -91,6 +92,7 @@ namespace RosterCheck_ASPNET.Models
 
         public class Spec
         {
+            public int Id { get; set; }
             public string Name { get; set; }
             public string Role { get; set; }
             public string Icon { get; set; }
@@ -101,9 +103,8 @@ namespace RosterCheck_ASPNET.Models
             private int _class;
             private int _race;
 
-            [DisplayName("Name")]
+            public int Id { get; set; }
             public string Name { get; set; }
-
             public string Realm { get; set; }
             public int Class
             {
@@ -214,6 +215,7 @@ namespace RosterCheck_ASPNET.Models
         {
             private int _rank;
 
+            public int Id { get; set; }
             public Character Character { get; set; }
             public int Rank
             {
@@ -269,10 +271,12 @@ namespace RosterCheck_ASPNET.Models
             }
 
             // DbContext for GuildModel class
-            public class GuildModelDbContext : DbContext
-            {
-                public DbSet<GuildModel> GuildModels { get; set; }
-            }
+            
+        }
+
+        public class GuildModelDbContext : DbContext
+        {
+            public DbSet<GuildModel> GuildModels { get; set; }
         }
     }
 }

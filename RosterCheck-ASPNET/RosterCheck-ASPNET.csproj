@@ -237,6 +237,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\GuildModels\GuildModels.cshtml" />
+    <Content Include="Views\GuildModels\CachedGuildModels.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
