@@ -8,18 +8,18 @@ using RosterCheck_ASPNET.DAL;
 
 namespace RosterCheck_ASPNET.Controllers
 {
-    public class GuildModelsController : Controller
+    public class GuildController : Controller
     {
         private readonly GuildModelDbContext _dbContext = new GuildModelDbContext();
         
         [HttpGet]
-        public ActionResult GuildModels()
+        public ActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult GuildModels(GuildModel guildSearchModel)
+        public ActionResult Index(GuildModel guildSearchModel)
         {
             // Check for blank strings in the search query
             if (guildSearchModel.Realm == null || guildSearchModel.Name == null)
