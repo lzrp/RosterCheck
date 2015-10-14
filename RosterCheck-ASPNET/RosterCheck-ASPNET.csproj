@@ -239,7 +239,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\GuildModels\GuildModels.cshtml" />
     <Content Include="Views\GuildModels\CachedGuildModels.cshtml" />
-    <Content Include="Views\GuildModels\CachedGuildModelsPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

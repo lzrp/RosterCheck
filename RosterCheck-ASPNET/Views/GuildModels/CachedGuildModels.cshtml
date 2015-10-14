@@ -1,11 +1,8 @@
-﻿@model RosterCheck_ASPNET.Models.GuildModel
+﻿@using Microsoft.Ajax.Utilities
+@model RosterCheck_ASPNET.Models.GuildModel
 
-@{
-    ViewBag.Title = "Roster";
-}
-
-<h2>Roster</h2>
-
+@if (Model != null)
+{
 <table>
 
     @*table column names*@
@@ -60,3 +57,4 @@
         </tr>
     }
 </table>
+}

@@ -10,34 +10,43 @@ namespace RosterCheck_ASPNET.Controllers
 {
     public class GuildModelsController : Controller
     {
-        private GuildModelDbContext dbContext = new GuildModelDbContext();
-
-        // GET: Roster
+        private readonly GuildModelDbContext _dbContext = new GuildModelDbContext();
+        
+        [HttpGet]
         public ActionResult GuildModels()
         {
-            //if (realmName == null || guildName == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-
-            //var model = GuildModel.GetGuildModel(realmName, guildName);
             return View();
         }
 
-        public ActionResult CachedGuildModels()
+        [HttpPost]
+        public ActionResult GuildModels(GuildModel guildSearchModel)
         {
-            var model = dbContext.GuildModels.ToList().First();
+            // Check for blank strings in the search query
+            if (guildSearchModel.Realm == null || guildSearchModel.Name == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var model = GuildModel.GetGuildModel(guildSearchModel.Realm, guildSearchModel.Name);
+
+            //return View("CachedGuildModels", model);
             return View(model);
         }
 
-        public ActionResult ImportGuild()
-        {
-            //var importedGuild = GuildModel.GetGuildModel();
+        //public ActionResult CachedGuildModels()
+        //{
+        //    var model = _dbContext.GuildModels.ToList().First();
+        //    return View(model);
+        //}
 
-            //dbContext.GuildModels.Add(importedGuild);
-            //dbContext.SaveChanges();
+        //public ActionResult ImportGuild()
+        //{
+        //    //var importedGuild = GuildModel.GetGuildModel();
 
-            return RedirectToAction("CachedGuildModels");
-        }
+        //    //dbContext.GuildModels.AddOrUpdate(importedGuild);
+        //    //dbContext.SaveChanges();
+
+        //    return RedirectToAction("CachedGuildModels");
+        //}
     }
 }
