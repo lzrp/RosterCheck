@@ -25,8 +25,13 @@ namespace RosterCheck_ASPNET.Controllers
         [HttpGet]
         public ActionResult IndexFromDb(string realm, string name)
         {
-            var guild = _dbContext.GuildModels.Find(realm, name);
+            // Looks up a guild in the db by realm and guild name
+            // linq is used for eagerly loading all related entities
+            var guild = _dbContext.GuildModels
+                .Include(x => x.Members.Select(c => c.Character).Select(v => v.Spec))
+                .SingleOrDefault(g => g.Realm == realm && g.Name == name);
 
+            // return a populated view when found or a blank one if no such guild exists in the db
             return guild != null ? View("Index", guild) : View("Index");
         }
 
@@ -43,7 +48,6 @@ namespace RosterCheck_ASPNET.Controllers
             var model = GuildModel.GetGuildModel(guildSearchModel.Realm, guildSearchModel.Name);
 
             // adds or updates the guild in the database
-            
             _dbContext.GuildModels.AddOrUpdate(x => new { x.Realm, x.Name},model);
             _dbContext.SaveChanges();
 

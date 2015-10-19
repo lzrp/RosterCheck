@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using Microsoft.Ajax.Utilities;
 using RosterCheck_ASPNET.Models;
 
 namespace RosterCheck_ASPNET.DAL
@@ -13,4 +14,5 @@ namespace RosterCheck_ASPNET.DAL
         public DbSet<GuildModel.Member> Members { get; set; }
         public DbSet<GuildModel.Character> Characters { get; set; }
     }
+    
 }

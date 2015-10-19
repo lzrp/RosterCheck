@@ -13,7 +13,7 @@ namespace RosterCheck_ASPNET
             routes.MapRoute(
                 name: "GuildIndex",
                 url: "g/{realm}/{name}",
-                defaults: new { controller = "Guild", action = "Index", realm = UrlParameter.Optional, name = UrlParameter.Optional }
+                defaults: new { controller = "Guild", action = "IndexFromDb", realm = "", name = "" }
             );
 
             routes.MapRoute(
