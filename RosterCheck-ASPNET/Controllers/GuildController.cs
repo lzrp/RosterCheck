@@ -32,7 +32,14 @@ namespace RosterCheck_ASPNET.Controllers
                 .SingleOrDefault(g => g.Realm == realm && g.Name == name);
 
             // return a populated view when found or a blank one if no such guild exists in the db
-            return guild != null ? View("Index", guild) : View("Index");
+            //return guild != null ? View("Index", guild) : RedirectToAction"Index");
+
+            if (guild != null)
+            {
+                return View("Index", guild);
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
