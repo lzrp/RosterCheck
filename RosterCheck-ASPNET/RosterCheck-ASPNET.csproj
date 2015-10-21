@@ -188,6 +188,10 @@
     <Compile Include="Migrations\201510211152469_characterAdded.Designer.cs">
       <DependentUpon>201510211152469_characterAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510211301337_LastModifiedFromIntToLong.cs" />
+    <Compile Include="Migrations\201510211301337_LastModifiedFromIntToLong.Designer.cs">
+      <DependentUpon>201510211301337_LastModifiedFromIntToLong.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GuildModel.cs" />
@@ -281,6 +285,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510211152469_characterAdded.resx">
       <DependentUpon>201510211152469_characterAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510211301337_LastModifiedFromIntToLong.resx">
+      <DependentUpon>201510211301337_LastModifiedFromIntToLong.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

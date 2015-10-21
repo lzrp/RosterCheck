@@ -121,7 +121,7 @@ namespace RosterCheck_ASPNET.Models
             public int Gender { get; set; }
             public int Level { get; set; }
             public Spec Spec { get; set; }
-            public int LastModified { get; set; }
+            public long LastModified { get; set; }
             public Audit Audit { get; set; } = new Audit();
 
             /// <summary>
