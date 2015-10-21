@@ -184,6 +184,10 @@
     <Compile Include="Migrations\201510191233278_FirstDbMig.Designer.cs">
       <DependentUpon>201510191233278_FirstDbMig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510211152469_characterAdded.cs" />
+    <Compile Include="Migrations\201510211152469_characterAdded.Designer.cs">
+      <DependentUpon>201510211152469_characterAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GuildModel.cs" />
@@ -255,6 +259,8 @@
     <Content Include="Views\Character\Details.cshtml" />
     <Content Include="Views\Character\Edit.cshtml" />
     <Content Include="Views\Character\Index.cshtml" />
+    <Content Include="Views\Character\CharacterData.cshtml" />
+    <Content Include="Views\Character\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -272,6 +278,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510191233278_FirstDbMig.resx">
       <DependentUpon>201510191233278_FirstDbMig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510211152469_characterAdded.resx">
+      <DependentUpon>201510211152469_characterAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

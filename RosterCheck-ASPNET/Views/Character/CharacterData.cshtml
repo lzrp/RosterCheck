@@ -1,0 +1,47 @@
+﻿@model RosterCheck_ASPNET.Models.GuildModel.Character
+
+@if (Model != null)
+{
+    <table>
+
+        @*table column names*@
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Realm
+            </th>
+            <th>
+                Issues
+            </th>
+        </tr>
+
+        @foreach (var member in Model.Members.OrderBy(x => x.Rank))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => member.Character.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => member.Character.Realm)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => member.Character.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => member.Character.RaceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => member.Character.Spec.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => member.Character.Spec.Role)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => member.RankName)
+                </td>
+            </tr>
+        }
+    </table>
+}

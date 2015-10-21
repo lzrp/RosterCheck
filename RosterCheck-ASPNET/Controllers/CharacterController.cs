@@ -2,23 +2,42 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using RosterCheck_ASPNET.DAL;
 using RosterCheck_ASPNET.Models;
+using static RosterCheck_ASPNET.Models.GuildModel;
 
 namespace RosterCheck_ASPNET.Controllers
 {
     public class CharacterController : Controller
     {
-        private readonly GuildModelDbContext _db = new GuildModelDbContext();
+        private readonly GuildModelDbContext _dbContext = new GuildModelDbContext();
 
         // GET: Character
         public ActionResult Index()
         {
-            return View(_db.Characters.ToList());
+            return View(_dbContext.Characters.ToList().Last());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search([Bind(Include = "Realm,Name")] Character character)
+        {
+            if (ModelState.IsValid)
+            {
+                // get the character from the armory
+                var characterModel = Character.GetCharacter(character.Realm, character.Name);
+
+                // add the character to the db or update it when it is already there
+                _dbContext.Characters.AddOrUpdate(x => new {x.Realm, x.Name}, characterModel);
+                _dbContext.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
         }
 
         // GET: Character/Details/5
@@ -28,7 +47,7 @@ namespace RosterCheck_ASPNET.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            GuildModel guildModel = _db.GuildModels.Find(id);
+            GuildModel guildModel = _dbContext.GuildModels.Find(id);
             if (guildModel == null)
             {
                 return HttpNotFound();
@@ -51,8 +70,8 @@ namespace RosterCheck_ASPNET.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.GuildModels.Add(guildModel);
-                _db.SaveChanges();
+                _dbContext.GuildModels.Add(guildModel);
+                _dbContext.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +85,7 @@ namespace RosterCheck_ASPNET.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            GuildModel guildModel = _db.GuildModels.Find(id);
+            GuildModel guildModel = _dbContext.GuildModels.Find(id);
             if (guildModel == null)
             {
                 return HttpNotFound();
@@ -83,8 +102,8 @@ namespace RosterCheck_ASPNET.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(guildModel).State = EntityState.Modified;
-                _db.SaveChanges();
+                _dbContext.Entry(guildModel).State = EntityState.Modified;
+                _dbContext.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(guildModel);
@@ -97,7 +116,7 @@ namespace RosterCheck_ASPNET.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            GuildModel guildModel = _db.GuildModels.Find(id);
+            GuildModel guildModel = _dbContext.GuildModels.Find(id);
             if (guildModel == null)
             {
                 return HttpNotFound();
@@ -110,9 +129,9 @@ namespace RosterCheck_ASPNET.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            GuildModel guildModel = _db.GuildModels.Find(id);
-            _db.GuildModels.Remove(guildModel);
-            _db.SaveChanges();
+            GuildModel guildModel = _dbContext.GuildModels.Find(id);
+            _dbContext.GuildModels.Remove(guildModel);
+            _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +139,7 @@ namespace RosterCheck_ASPNET.Controllers
         {
             if (disposing)
             {
-                _db.Dispose();
+                _dbContext.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -122,12 +122,7 @@ namespace RosterCheck_ASPNET.Models
             public int Level { get; set; }
             public Spec Spec { get; set; }
             public int LastModified { get; set; }
-
-            public class Audit
-            {
-                public int NumberOfIssues { get; set; }
-                public int EmptySockets { get; set; }
-            }
+            public Audit Audit { get; set; } = new Audit();
 
             /// <summary>
             /// Returns a class name based on the class id.
@@ -213,7 +208,7 @@ namespace RosterCheck_ASPNET.Models
             /// <param name="realmName">The realm name on which the character resides</param>
             /// <param name="characterName">The name of the character.</param>
             /// <returns>Character object.</returns>
-            public Character GetCharacter(string realmName, string characterName)
+            public static Character GetCharacter(string realmName, string characterName)
             {
                 try
                 {
@@ -315,6 +310,12 @@ namespace RosterCheck_ASPNET.Models
             
         }
 
-        
+        public class Audit
+        {
+            public int NumberOfIssues { get; set; } = 0;
+            public int EmptySockets { get; set; } = 0;
+        }
+
+
     }
 }
