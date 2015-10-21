@@ -8,6 +8,7 @@
 
 @using (Html.BeginForm(FormMethod.Post))
 {
+    @Html.AntiForgeryToken()
     <fieldset>
         <legend>Search for a guild</legend>
         <div class="editor-label">@Html.LabelFor(model => Model.Name)</div>

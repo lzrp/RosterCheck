@@ -1,0 +1,66 @@
+﻿@model RosterCheck_ASPNET.Models.GuildModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>GuildModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastModified)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Realm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Realm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Level)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Level)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Side)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Side)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AchievementPoints)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AchievementPoints)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

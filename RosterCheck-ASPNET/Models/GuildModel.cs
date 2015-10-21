@@ -123,6 +123,12 @@ namespace RosterCheck_ASPNET.Models
             public Spec Spec { get; set; }
             public int LastModified { get; set; }
 
+            public class Audit
+            {
+                public int NumberOfIssues { get; set; }
+                public int EmptySockets { get; set; }
+            }
+
             /// <summary>
             /// Returns a class name based on the class id.
             /// </summary>
@@ -198,6 +204,50 @@ namespace RosterCheck_ASPNET.Models
                         return "Pandaren";
                     default:
                         return "unknown race";
+                }
+            }
+
+            /// <summary>
+            /// Returns a character object from the armory with the specified realm name and character name.
+            /// </summary>
+            /// <param name="realmName">The realm name on which the character resides</param>
+            /// <param name="characterName">The name of the character.</param>
+            /// <returns>Character object.</returns>
+            public Character GetCharacter(string realmName, string characterName)
+            {
+                try
+                {
+                    // Create URL request
+                    var requestString =
+                        $"https://eu.api.battle.net/wow/character/{realmName}/{characterName}?fields=items,audit&locale=en_GB&apikey={ConfigurationManager.AppSettings["API_KEY"]}";
+                    var request = WebRequest.Create(requestString);
+
+                    // Get the response
+                    var response = request.GetResponse();
+
+                    // Get the stream content returned by the server
+                    var dataStream = response.GetResponseStream();
+
+                    // Open the stream for reading, if there is no data in the stream, return null
+                    if (dataStream == null) return new Character() {Name = "datastream error"};
+                    var reader = new StreamReader(dataStream);
+
+                    // Read the content of the stream
+                    var responseString = reader.ReadToEnd();
+
+                    // Cleanup
+                    reader.Close();
+                    response.Close();
+
+                    // deserialize character json string and return a character object
+                    var character = JsonConvert.DeserializeObject<Character>(responseString);
+
+                    return character;
+                    
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
                 }
             }
         }

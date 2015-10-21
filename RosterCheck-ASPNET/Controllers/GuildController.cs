@@ -32,17 +32,17 @@ namespace RosterCheck_ASPNET.Controllers
                 .SingleOrDefault(g => g.Realm == realm && g.Name == name);
 
             // return a populated view when found or a blank one if no such guild exists in the db
-            //return guild != null ? View("Index", guild) : RedirectToAction"Index");
-
             if (guild != null)
             {
                 return View("Index", guild);
             }
 
+            //TODO display an alert - "no guilds found"
             return RedirectToAction("Index");
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Index(GuildModel guildSearchModel)
         {
             // Check for blank strings in the search query
@@ -61,20 +61,14 @@ namespace RosterCheck_ASPNET.Controllers
             return View(model);
         }
 
-        //public ActionResult CachedGuildModels()
-        //{
-        //    var model = _dbContext.GuildModels.ToList().First();
-        //    return View(model);
-        //}
-
-        //public ActionResult ImportGuild()
-        //{
-        //    //var importedGuild = GuildModel.GetGuildModel();
-
-        //    //dbContext.GuildModels.AddOrUpdate(importedGuild);
-        //    //dbContext.SaveChanges();
-
-        //    return RedirectToAction("CachedGuildModels");
-        //}
+        // testing some stuff
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _dbContext.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
